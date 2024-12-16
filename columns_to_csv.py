@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np 
 
 # Realiza toda a leitura dos dados do csv
-df = pd.read_csv("BrFlights2.csv", encoding="ISO-8859-1")
+df = pd.read_csv("etl.csv", encoding="ISO-8859-1")
 
 #Trasnforma em csv apens os que são voos internacionais 
 df_internacional= df.copy()
@@ -45,3 +45,19 @@ paisDestino.to_csv("paisDestino.csv", index=False)
 paisOrigem= df.copy()
 paisOrigem = df[["Pais.Origem"]]
 paisOrigem.to_csv("paisOrigem.csv", index=False)
+
+cidadeOrigem= df.copy()
+cidadeOrigem = df[["Cidade.Origem"]]
+cidadeOrigem.to_csv("cidadeOrigem.csv", index=False)
+
+cidadeDestino= df.copy()
+cidadeDestino = df[["Cidade.Destino"]]
+cidadeDestino.to_csv("cidadeDestino.csv", index=False)
+
+EstadoOrigem= df.copy()
+EstadoOrigem = df[["Estado.Origem"]]
+EstadoOrigem.to_csv("estadoOrigem.csv", index=False)
+
+EstadosDestino= df.copy()
+EstadosDestino = df[["Estado.Destino"]]
+EstadosDestino.to_csv("estadoDestino.csv", index=False)
