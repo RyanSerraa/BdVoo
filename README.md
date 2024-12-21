@@ -1,4 +1,3 @@
 # BdVoo
 
-teste
-:/
+Remocao de N/I em Estado.Destino

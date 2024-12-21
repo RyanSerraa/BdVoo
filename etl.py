@@ -4,25 +4,30 @@ import numpy as np
 # Importação do DataFrame
 csv = pd.read_csv("BrFlights2.csv", encoding="ISO-8859-1")
 df = csv.copy()
+
 # Normalização do Código de Voo
 df["Voos"] = df["Voos"].str.replace("GLO", "GOL", regex=True)
 df["Voos"] = df["Voos"].str.replace("DSM", "4M", regex=True)
 df["Voos"] = df["Voos"].str.replace("LAP", "PZ", regex=True)
 df["Voos"] = df["Voos"].str.replace("NLU", "O6", regex=True)
 df["Voos"] = df["Voos"].str.replace("PTB", "QTR", regex=True)
+
 # Modifica o que for Regional para Nacional
 df["Codigo.Tipo.Linha"] = np.where(
     df["Codigo.Tipo.Linha"].str.contains("Regional"),
     "Nacional",
     df["Codigo.Tipo.Linha"],
 )
+
 # Normaliza cidades que na verdade são nacionais e estã listadas como internacionis
 df["Codigo.Tipo.Linha"] = np.where(
     df["Pais.Origem"] == "Brasil", "Nacional", df["Codigo.Tipo.Linha"]
 )
+
 # Padroniza tudo para -
 df["Aeroporto.Origem"] = df["Aeroporto.Origem"].str.replace("/", "-", regex=True)
 df["Aeroporto.Destino"] = df["Aeroporto.Destino"].str.replace("/", "-", regex=True)
+
 # Conserta o nome da cidade de Abu Dabhi
 df["Cidade.Origem"] = df["Cidade.Origem"].str.replace(
     "Ab Dhabi International", "Abu Dhabi International", regex=True
@@ -36,6 +41,7 @@ df["Aeroporto.Origem"] = df["Cidade.Origem"].str.replace(
 df["Aeroporto.Destino"] = df["Cidade.Destino"].str.replace(
     "Ab Dhabi International", "Abu Dhabi International", regex=True
 )
+
 # Padroniza toda as cidades que não tinham estado de origem ou destino
 df["Estado.Origem"] = np.where(
     df["Cidade.Origem"].str.contains("Luxemburgo", case=False),
@@ -177,6 +183,7 @@ df["Estado.Origem"] = np.where(
 df["Estado.Origem"] = np.where(
     df["Cidade.Origem"].str.contains("Punta Cana"), "LA", df["Estado.Origem"]
 )
+#CONSERTAR 
 df["Estado.Origem"] = np.where(
     df["Cidade.Origem"] == "Porto", "POR", df["Estado.Origem"]
 )
@@ -243,6 +250,52 @@ df["Estado.Origem"] = np.where(
 df["Estado.Origem"] = np.where(
     df["Cidade.Origem"].str.contains("Frankfurt"), "HE", df["Estado.Origem"]
 )
+#----------------------------------------ESTADO DESTINO---------------------------------------------------------------------------
+
+df["Estado.Destino"] = np.where(
+    df["Cidade.Destino"].str.contains("Abu Dhabi International"), "AUH", df["Estado.Destino"]
+)
+df["Estado.Destino"] = np.where(
+    df["Cidade.Destino"].str.contains("Addis Ababa"), "AA", df["Estado.Destino"]
+)
+df["Estado.Destino"] = np.where(
+    df["Cidade.Destino"].str.contains("Assuncao"), "ASU", df["Estado.Destino"]
+)
+df["Estado.Destino"] = np.where(
+    df["Cidade.Destino"].str.contains("Bogota"), "BOG", df["Estado.Destino"]
+)
+df["Estado.Destino"] = np.where(
+    df["Cidade.Destino"].str.contains("Cancun/Intl"), "QR", df["Estado.Destino"]
+)
+df["Estado.Destino"] = np.where(
+    df["Cidade.Destino"].str.contains("Cordoba"), "CB", df["Estado.Destino"]
+)
+df["Estado.Destino"] = np.where(
+    df["Cidade.Destino"].str.contains("Curacao"), "CW", df["Estado.Destino"]
+)
+df["Estado.Destino"] = np.where(
+    df["Cidade.Destino"].str.contains("Dacar"), "DK", df["Estado.Destino"]
+)
+df["Estado.Destino"] = np.where(
+    df["Cidade.Destino"].str.contains("Doha"), "DA", df["Estado.Destino"]
+)
+df["Estado.Destino"] = np.where(
+    df["Cidade.Destino"].str.contains("Dubai International"), "DXB", df["Estado.Destino"]
+)
+df["Estado.Destino"] = np.where(
+    df["Cidade.Destino"].str.contains("Frankfurt"), "HE", df["Estado.Destino"]
+)
+df["Estado.Destino"] = np.where(
+    df["Cidade.Destino"].str.contains("Porto"), "POR", df["Estado.Destino"]
+)
+df["Estado.Destino"] = np.where(
+    df["Cidade.Destino"].str.contains("Viru Viru"), "SC", df["Estado.Destino"]
+)
+df["Estado.Destino"] = np.where(
+    df["Cidade.Destino"].str.contains("Zurique"), "ZH", df["Estado.Destino"]
+)
+
+
 df["Estado.Destino"] = np.where(
     df["Cidade.Destino"].str.contains("Amsterdam"), "NH", df["Estado.Destino"]
 )
@@ -292,9 +345,7 @@ df["Estado.Destino"] = np.where(
     df["Cidade.Destino"].str.contains("Zandery"), "PM", df["Estado.Destino"]
 )
 df["Estado.Destino"] = np.where(
-    df["Cidade.Destino"].str.contains("Washington/Dulles Intl"),
-    "VA",
-    df["Estado.Destino"],
+    df["Cidade.Destino"].str.contains("Washington/Dulles Intl"), "VA", df["Estado.Destino"],
 )
 df["Estado.Destino"] = np.where(
     df["Cidade.Destino"].str.contains("Toronto"), "ON", df["Estado.Destino"]
@@ -396,14 +447,10 @@ df["Estado.Destino"] = np.where(
     df["Cidade.Destino"].str.contains("Rondonia"), "RO", df["Estado.Destino"]
 )
 df["Estado.Destino"] = np.where(
-    df["Cidade.Destino"].str.contains("Luxemburgo", case=False),
-    "LU",
-    df["Estado.Destino"],
+    df["Cidade.Destino"].str.contains("Luxemburgo", case=False), "LU", df["Estado.Destino"],
 )
 df["Estado.Destino"] = np.where(
-    df["Cidade.Destino"].str.contains("Sao Domingo", case=False),
-    "DO",
-    df["Estado.Destino"],
+    df["Cidade.Destino"].str.contains("Sao Domingo", case=False), "DO", df["Estado.Destino"],
 )
 df["Estado.Destino"] = np.where(
     df["Cidade.Destino"].str.contains("Cochabamba", case=False),
@@ -429,7 +476,7 @@ df["Estado.Destino"] = np.where(
 df["Estado.Destino"] = np.where(
     df["Cidade.Destino"].str.contains("Houston", case=False), "TX", df["Estado.Destino"]
 )  # Texas
-
+#---------------------------------------------------------------------------------------------------------------------------------------
 # Normalização do Aeroporto
 df["Cidade.Destino"] = np.where(
     df["Aeroporto.Destino"].str.contains("Placido de Castro"),
@@ -447,6 +494,7 @@ df["Companhia.Aerea"] = np.where(
     "SOUTH AFRICAN AIRWAYS",
     df["Companhia.Aerea"],
 )
+
 # Normalização código justificativa
 
 # df["Codigo.Justificativa"].fillna("Sem justificativa")
