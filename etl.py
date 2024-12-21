@@ -496,6 +496,10 @@ df["Companhia.Aerea"] = np.where(
 )
 
 # Normalização código justificativa
-df["Codigo.Justificativa"].fillna("Sem justificativa")
+
+# df["Codigo.Justificativa"].fillna("Sem justificativa")
+df['Codigo.Justificativa'] = df['Codigo.Justificativa'].fillna('NAO INFORMADO')
+df['Codigo.Justificativa'] = df['Codigo.Justificativa'].replace(r'^\s*$', 'NAO INFORMADO', regex=True).str.strip()
+df['Codigo.Justificativa'] = df['Codigo.Justificativa'].replace('na', 'não informado').str.strip()
 
 df.to_csv("etl.csv", index=False)
