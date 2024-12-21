@@ -1,0 +1,12 @@
+# Use uma imagem base com Python
+FROM python:3.9-slim
+
+# Instale dependências necessárias
+RUN pip install pandas numpy
+
+# Copie os arquivos do projeto para o container
+WORKDIR /app
+COPY . /app
+
+# Comando padrão para rodar o script
+CMD ["python", "/app/etl.py"]

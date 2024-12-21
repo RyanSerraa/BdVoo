@@ -71,6 +71,8 @@ unique_values=EstadoDestino["Estado.Destino"].unique()
 print(unique_values)
 
 etl= pd.read_csv("etl.csv")
+cidades_destino_nacionais = etl[etl["Codigo.Tipo.Linha"] == "Nacional"]
+cidades_destino_nacionais = cidades_destino_nacionais[["Cidade.Origem","Estado.Origem" ,"Codigo.Tipo.Linha", "Aeroporto.Origem", "Pais.Origem"]].drop_duplicates()
 columns=["Voos","Estado.Destino", "Estado.Origem", "Codigo.Justificativa", "Pais.Origem", "Pais.Destino", "Situacao.Voo", "Aeroporto.Origem", "Aeroporto.Destino", "Cidade.Origem", "Cidade.Destino"]
 cidades = etl.copy()
 etl["Voos"] = etl["Voos"].str.replace(r'\d', '', regex=True)
@@ -83,28 +85,17 @@ for column in columns:
         print(f"A coluna '{column}' não está presente no arquivo CSV.")
         
 # Cidades Internacionais
-cidades_origem_internacionais = etl[etl["Codigo.Tipo.Linha"] == "Internacional"]
-cidades_origem_internacionais = cidades_origem_internacionais[["Cidade.Origem","Estado.Origem" ,"Codigo.Tipo.Linha", "Aeroporto.Origem", "Pais.Origem"]].drop_duplicates()
-
-print("Cidades Internacionais:")
-print(cidades_origem_internacionais)
 
 # Cidades Nacionais
-cidades_origem_nacionais = etl[etl["Codigo.Tipo.Linha"] == "Nacional"]
-cidades_origem_nacionais = cidades_origem_nacionais[["Cidade.Origem","Estado.Origem","Codigo.Tipo.Linha", "Aeroporto.Origem", "Pais.Origem"]].drop_duplicates()
+cidades_nacionais = etl[etl["Codigo.Tipo.Linha"] == "Nacional"]
+cidades_nacionais = cidades_nacionais[["Cidade.Origem","Cidade.Destino","Estado.Origem", "Estado.Destino" ,"Codigo.Tipo.Linha", "Aeroporto.Origem", "Aeroporto.Destino", "Pais.Origem", "Pais.Destino"]].drop_duplicates()
 
 print("Cidades Nacionais:")
-print(cidades_origem_nacionais)
+print(cidades_nacionais)
 
 # cidades como N/I
-cidades_destino_internacionais = etl[etl["Codigo.Tipo.Linha"] == "Internacional"]
-cidades_destino_internacionais = cidades_destino_internacionais[["Cidade.Origem","Estado.Origem" ,"Codigo.Tipo.Linha", "Aeroporto.Origem", "Pais.Origem"]].drop_duplicates()
+cidades_internacionais = etl[etl["Codigo.Tipo.Linha"] == "Internacional"]
+cidades_internacionais = cidades_internacionais[["Cidade.Origem","Cidade.Destino","Estado.Origem", "Estado.Destino" ,"Codigo.Tipo.Linha", "Aeroporto.Origem", "Aeroporto.Destino", "Pais.Origem", "Pais.Destino"]].drop_duplicates()
 
-cidades_destino_nacionais = etl[etl["Codigo.Tipo.Linha"] == "Nacional"]
-cidades_destino_nacionais = cidades_destino_nacionais[["Cidade.Origem","Estado.Origem" ,"Codigo.Tipo.Linha", "Aeroporto.Origem", "Pais.Origem"]].drop_duplicates()
-
-
-cidades_origem_nacionais.to_csv("cidades_origem_nacionais.csv", index=True)
-cidades_origem_internacionais.to_csv("cidades_origem_internacionais.csv", index=True)
-cidades_destino_nacionais.to_csv("cidades_destino_nacionais.csv", index=True)
-cidades_destino_internacionais.to_csv("cidades_destino_internacionais.csv", index=True)
+cidades_nacionais.to_csv("cidades_nacionais.csv", index=True)
+cidades_internacionais.to_csv("cidades_origem_internacionais.csv", index=True)

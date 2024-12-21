@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: etl
+spec:
+  schedule: "*/5 * * * *"  # Executa a cada 5 minutos
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: etl
+            image: ryan-Inspiron-15-3511/etl:1.0
+            imagePullPolicy: Always
+            volumeMounts:
+            - name: data-volume
+              mountPath: /app/data
+          restartPolicy: OnFailure
+          volumes:
+          - name: data-volume
+            hostPath:
+              path: /trabBD3/BrFlights2.csv  # Substitua pelo caminho real no host
+              type: File

@@ -19,9 +19,9 @@ df["Codigo.Tipo.Linha"] = np.where(
     df["Codigo.Tipo.Linha"],
 )
 
-# Normaliza cidades que na verdade são nacionais e estã listadas como internacionis
+#Normaliza cidades que na verdade são nacionais e estão listadas como internacionis
 df["Codigo.Tipo.Linha"] = np.where(
-    df["Pais.Origem"] == "Brasil", "Nacional", df["Codigo.Tipo.Linha"]
+    df["Pais.Origem"]== df["Pais.Destino"], "Nacional", df["Codigo.Tipo.Linha"]
 )
 
 # Padroniza tudo para -
@@ -286,7 +286,7 @@ df["Estado.Destino"] = np.where(
     df["Cidade.Destino"].str.contains("Frankfurt"), "HE", df["Estado.Destino"]
 )
 df["Estado.Destino"] = np.where(
-    df["Cidade.Destino"].str.contains("Porto"), "POR", df["Estado.Destino"]
+    df["Cidade.Destino"]=="Porto", "POR", df["Estado.Destino"]
 )
 df["Estado.Destino"] = np.where(
     df["Cidade.Destino"].str.contains("Viru Viru"), "SC", df["Estado.Destino"]
