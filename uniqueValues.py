@@ -96,7 +96,7 @@ cidades_origem_nacionais = cidades_origem_nacionais[["Cidade.Origem","Estado.Ori
 print("Cidades Nacionais:")
 print(cidades_origem_nacionais)
 
-
+# cidades como N/I
 cidades_destino_internacionais = etl[etl["Codigo.Tipo.Linha"] == "Internacional"]
 cidades_destino_internacionais = cidades_destino_internacionais[["Cidade.Origem","Estado.Origem" ,"Codigo.Tipo.Linha", "Aeroporto.Origem", "Pais.Origem"]].drop_duplicates()
 
