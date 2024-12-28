@@ -10,14 +10,6 @@ spec:
         spec:
           containers:
           - name: etl
-            image: ryan-Inspiron-15-3511/etl:1.0
-            imagePullPolicy: Always
-            volumeMounts:
-            - name: data-volume
-              mountPath: /app/data
+            image: etl-container:latest  # Use a imagem local
+            imagePullPolicy: Never  # Usa a imagem local, se disponível
           restartPolicy: OnFailure
-          volumes:
-          - name: data-volume
-            hostPath:
-              path: /trabBD3/BrFlights2.csv  # Substitua pelo caminho real no host
-              type: File

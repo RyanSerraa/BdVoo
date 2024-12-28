@@ -515,7 +515,7 @@ df["Codigo.Justificativa"] = (
     .str.strip()
 )
 df["Codigo.Justificativa"] = (
-    df["Codigo.Justificativa"].replace("na", "não informado").str.strip()
+    df["Codigo.Justificativa"].replace("na", "NAO INFORMADO").str.strip()
 )
 
 df.to_csv("etl.csv", index=False)
