@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 # Realiza toda a leitura dos dados do csv
-df = pd.read_csv("etl.csv", encoding="ISO-8859-1")
+df = pd.read_csv("BrFlights2.csv", encoding="ISO-8859-1")
 
 # Trasnforma em csv apens os que são voos internacionais
 df_internacional = df.copy()
