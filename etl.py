@@ -518,10 +518,6 @@ df["Codigo.Justificativa"] = (
     df["Codigo.Justificativa"].replace("na", "NAO INFORMADO").str.strip()
 )
 
-# Conversão de Partida.Prevista e Partida.Real para o formato datetime
-df['Chegada.Real'] = pd.to_datetime(df['Chegada.Real'], format="%Y-%m-%dT%H:%M:%SZ", errors='coerce')
-df['Chegada.Prevista'] = pd.to_datetime(df['Chegada.Prevista'], format="%Y-%m-%d %H:%M:%S", errors='coerce')
-
 # Atualizar a coluna Codigo.Justificativa
 df['Codigo.Justificativa'] = np.where(
     (df['Codigo.Justificativa'] == 'NA') & (df['Partida.Real'] <= df['Partida.Prevista']),
@@ -540,19 +536,5 @@ df['Codigo.Justificativa'] = df['Codigo.Justificativa'].str.replace('AUTORIZADA'
 # Preenchendo valores nulos
 df['Partida.Real'] = df['Partida.Real'].fillna("1970-01-01 00:00:00")
 df['Chegada.Real'] = df['Chegada.Real'].fillna("1970-01-01 00:00:00")
-
-# Ajustando Partida.Prevista e Chegada.Prevista com base nas condições
-df['Partida.Prevista'] = np.where(
-    df['Chegada.Prevista'] <= df['Partida.Prevista'],
-    df['Chegada.Prevista'],
-    df['Partida.Prevista']
-)
-
-df['Chegada.Prevista'] = np.where(
-    df['Chegada.Prevista'] <= df['Partida.Prevista'],
-    df['Partida.Prevista'],
-    df['Chegada.Prevista']
-)
-
 
 df.to_csv("etl.csv", index=False)

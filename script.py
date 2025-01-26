@@ -12,7 +12,7 @@ json_file = 'dump.json'
 df = pd.read_csv(csv_file)
 
 # Amostrar 1% dos dados (ajuste a proporção conforme necessário)
-sampled_df = df.sample(frac=0.25, random_state=42)  # random_state para reprodutibilidade
+sampled_df = df.sample(frac=0.025, random_state=42)  # random_state para reprodutibilidade
 
 # Salvar o novo arquivo CSV
 sampled_df.to_csv('prepareted.csv', index=False)
@@ -29,3 +29,23 @@ with open(json_file, mode='w', encoding='utf-8') as file:
     json.dump(data, file, indent=4, ensure_ascii=False)
 
 print(f"Arquivo JSON criado: {json_file}")
+
+
+# Nome do arquivo original e do arquivo atualizado
+arquivo_original = "dump.json"
+arquivo_atualizado = "dump_atualizado.json"
+
+# Carregar os dados do arquivo JSON original
+with open(arquivo_original, "r", encoding="utf-8") as file:
+    data = json.load(file)
+
+# Remover os pontos nas chaves de cada item
+data_atualizada = [
+    {key.replace(".", ""): value for key, value in item.items()} for item in data
+]
+
+# Salvar os dados atualizados em um novo arquivo JSON
+with open(arquivo_atualizado, "w", encoding="utf-8") as file:
+    json.dump(data_atualizada, file, ensure_ascii=False, indent=4)
+
+print(f"Dados atualizados salvos em '{arquivo_atualizado}'.")
